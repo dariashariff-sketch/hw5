@@ -1,0 +1,371 @@
+{
+  "run_date": "2026-10-14",
+  "shop_date": "2026-08-31",
+  "database": "data/campus_customs_new.db (reset from data/campus_customs.db before the run)",
+  "starting_checking_balance": 3400.0,
+  "ending_checking_balance": 152.0,
+  "total_cash_out": 3248.0,
+  "tickets": [
+    {
+      "id": 101,
+      "subject": "Bulldog tee",
+      "requester": "Tauhid Zaman",
+      "final_status": "resolved",
+      "boss_status_in_db": "waiting_on_human",
+      "short_outcome": "Size S tee was out of stock and the only apparel vendor was blocked by overdue invoice 501. The team prepared payment of the $840 invoice and a $8 PO for 1 tee; both were approved by a human, so the restock is ordered (arrives 2026-09-05) and a kind update to Tauhid is drafted (not sent).",
+      "boss_decision": "Escalated invoice payment approval 1 for $840 and purchase-order approval 2 for $8 to human review. The order is short one CC-TEE-WHITE size S; paying the overdue vendor invoice should unblock the 1-unit restock, with earliest possible arrival on 2026-09-05 if approved and placed today.",
+      "agents": {
+        "Boss": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Read the ticket and cash, sent Inventory first, then Customer Service; posted the decision and set waiting_on_human (escalated for the 2 approvals).",
+          "mcp_tools": {
+            "get_ticket_details": 1,
+            "ask_teammate": 2,
+            "get_cash_position": 1,
+            "post_to_board": 1,
+            "update_ticket_status": 1
+          }
+        },
+        "Inventory": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Found 0 size S on hand (short 1), picked Bulldog Print Co (5-day lead), flagged it blocked by invoice 501, priced the restock at $8, and handed Accounting the restock.",
+          "mcp_tools": {
+            "check_stock_and_vendors": 1,
+            "get_pricing_and_margin": 1,
+            "get_ticket_details": 1,
+            "post_to_board": 1,
+            "ask_teammate": 1
+          }
+        },
+        "Accounting": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Confirmed invoice 501 ($840, 3 days overdue) and cash; filed approval #1 (pay invoice 501, $840) and approval #2 (PO 1 tee, $8); noted rent of $2,400 still due 9/2.",
+          "mcp_tools": {
+            "get_cash_position": 1,
+            "get_invoice_status": 1,
+            "get_ticket_details": 1,
+            "list_pending_approvals": 1,
+            "check_stock_and_vendors": 1,
+            "get_pricing_and_margin": 1,
+            "get_lease_rent_status": 1,
+            "request_payment": 1,
+            "request_purchase_order": 1,
+            "post_to_board": 1
+          }
+        },
+        "Facilities": {
+          "called": false,
+          "runs": 0,
+          "contribution": "Not called on this ticket.",
+          "mcp_tools": {}
+        },
+        "Customer Service": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Drafted a kind, conditional update to Tauhid (earliest possible 9/5, depends on approvals); no internal numbers; not sent.",
+          "mcp_tools": {
+            "get_ticket_details": 1,
+            "check_stock_and_vendors": 1,
+            "post_to_board": 1
+          }
+        }
+      },
+      "delegations": [
+        {
+          "chain": "boss",
+          "to": "inventory"
+        },
+        {
+          "chain": "boss -> inventory",
+          "to": "accounting"
+        },
+        {
+          "chain": "boss",
+          "to": "customer_service"
+        }
+      ],
+      "board_posts": [
+        {
+          "id": 1,
+          "author": "Inventory",
+          "kind": "internal_note"
+        },
+        {
+          "id": 2,
+          "author": "Accounting",
+          "kind": "internal_note"
+        },
+        {
+          "id": 3,
+          "author": "Customer Service",
+          "kind": "customer_draft"
+        },
+        {
+          "id": 4,
+          "author": "Boss",
+          "kind": "decision"
+        }
+      ],
+      "human_approvals": [
+        {
+          "approval_id": 1,
+          "kind": "invoice",
+          "ref_id": 501,
+          "amount": 840.0,
+          "requested_by": "accounting",
+          "status": "approved_paid",
+          "approved_by": "Daria",
+          "approved_at": "2026-10-14T23:32:39+00:00",
+          "payment_id": 1,
+          "paid_at_shop_date": "2026-08-31"
+        },
+        {
+          "approval_id": 2,
+          "kind": "purchase_order",
+          "ref_id": 1,
+          "amount": 8.0,
+          "requested_by": "accounting",
+          "status": "approved_paid",
+          "approved_by": "Daria",
+          "approved_at": "2026-10-14T23:32:43+00:00",
+          "payment_id": 2,
+          "paid_at_shop_date": "2026-08-31"
+        }
+      ],
+      "cash_change": -848.0,
+      "run": {
+        "run_id": "d76ea1c190d7",
+        "total_tokens": 58038,
+        "model_requests": 17,
+        "tool_calls": 24,
+        "model": "openai-gpt-luna-6"
+      }
+    },
+    {
+      "id": 102,
+      "subject": "Rent due",
+      "requester": "Elm City Properties",
+      "final_status": "resolved",
+      "boss_status_in_db": "waiting_on_human",
+      "short_outcome": "Rent notice matched lease 1 ($2,400 due 2026-09-02, urgent, not overdue). The team prepared the rent payment; a human approved it, so rent is paid on time and the lease's next due date is 2026-10-02.",
+      "boss_decision": "Lease 1's normal $2,400 rent payment to Elm City Properties is prepared under approval 3 and should be approved by a human before the 2026-09-02 due date. Facilities confirmed there is no lease issue beyond paying normal rent.",
+      "agents": {
+        "Boss": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Sent Facilities first and, at the same time, Accounting; rechecked cash ($3,248 pending, $152 left); posted the decision and set waiting_on_human.",
+          "mcp_tools": {
+            "get_ticket_details": 1,
+            "ask_teammate": 2,
+            "get_cash_position": 2,
+            "post_to_board": 1,
+            "update_ticket_status": 1
+          }
+        },
+        "Inventory": {
+          "called": false,
+          "runs": 0,
+          "contribution": "Not called on this ticket.",
+          "mcp_tools": {}
+        },
+        "Accounting": {
+          "called": true,
+          "runs": 2,
+          "contribution": "Ran twice (asked by Facilities and by Boss); filed exactly one request, approval #3 (rent, $2,400); the second run found it already pending and filed nothing.",
+          "mcp_tools": {
+            "get_cash_position": 2,
+            "get_lease_rent_status": 2,
+            "get_ticket_details": 2,
+            "list_pending_approvals": 1,
+            "request_payment": 1,
+            "post_to_board": 1
+          }
+        },
+        "Facilities": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Verified the notice against lease 1 (Elm City Properties, $2,400, due 2026-09-02, 2 days out, no contract issue) and asked Accounting to prepare rent.",
+          "mcp_tools": {
+            "get_lease_rent_status": 1,
+            "get_cash_position": 1,
+            "post_to_board": 1,
+            "ask_teammate": 1
+          }
+        },
+        "Customer Service": {
+          "called": false,
+          "runs": 0,
+          "contribution": "Not called on this ticket.",
+          "mcp_tools": {}
+        }
+      },
+      "delegations": [
+        {
+          "chain": "boss",
+          "to": "facilities"
+        },
+        {
+          "chain": "boss",
+          "to": "accounting"
+        },
+        {
+          "chain": "boss -> facilities",
+          "to": "accounting"
+        }
+      ],
+      "board_posts": [
+        {
+          "id": 5,
+          "author": "Facilities",
+          "kind": "internal_note"
+        },
+        {
+          "id": 6,
+          "author": "Accounting",
+          "kind": "internal_note"
+        },
+        {
+          "id": 7,
+          "author": "Boss",
+          "kind": "decision"
+        }
+      ],
+      "human_approvals": [
+        {
+          "approval_id": 3,
+          "kind": "rent",
+          "ref_id": 1,
+          "amount": 2400.0,
+          "requested_by": "accounting",
+          "status": "approved_paid",
+          "approved_by": "Daria",
+          "approved_at": "2026-10-14T23:32:48+00:00",
+          "payment_id": 3,
+          "paid_at_shop_date": "2026-08-31"
+        }
+      ],
+      "cash_change": -2400.0,
+      "run": {
+        "run_id": "a8971194d382",
+        "total_tokens": 46745,
+        "model_requests": 14,
+        "tool_calls": 20,
+        "model": "openai-gpt-luna-6"
+      }
+    },
+    {
+      "id": 103,
+      "subject": "Bulk hoodie discount",
+      "requester": "Yale AI Club",
+      "final_status": "resolved",
+      "boss_status_in_db": "in_progress",
+      "short_outcome": "Only 8 of 20 size M hoodies are in stock and the 12-unit restock vendor was blocked. Boss chose a conditional quote of $25.89/hoodie ($517.80 for 20, 55.36% off, exactly the 15% margin floor), offered 8 now, filed no PO or payment, and escalated to a human. The quote draft stays on the board for review.",
+      "boss_decision": "Offer Yale AI Club a conditional bulk quote of $25.89 per CC-HOOD-NAVY size M hoodie, or $517.80 total for 20 units, while making clear that only 8 are currently available. The remaining 12 cannot be promised because Bulldog Print Co is blocked by overdue invoice 501; the customer draft is posted for human review and no PO or payment request was created.",
+      "agents": {
+        "Boss": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Sent Inventory first, then Accounting and Customer Service; chose the $25.89/unit conditional quote at the 15% margin floor; posted the decision; set in_progress and escalated to a human.",
+          "mcp_tools": {
+            "get_ticket_details": 1,
+            "ask_teammate": 3,
+            "get_cash_position": 1,
+            "post_to_board": 1,
+            "update_ticket_status": 1
+          }
+        },
+        "Inventory": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Found 8 size M on hand (short 12), Bulldog blocked by invoice 501, restock cost $264; asked Accounting about the blocked restock.",
+          "mcp_tools": {
+            "check_stock_and_vendors": 1,
+            "get_ticket_details": 1,
+            "get_pricing_and_margin": 1,
+            "post_to_board": 1,
+            "ask_teammate": 1
+          }
+        },
+        "Accounting": {
+          "called": true,
+          "runs": 2,
+          "contribution": "Ran twice (asked by Inventory and by Boss); confirmed invoice 501 already had approval #1 pending so filed no duplicate and no hoodie PO; ran the margin math.",
+          "mcp_tools": {
+            "get_pricing_and_margin": 1,
+            "get_invoice_status": 1,
+            "get_cash_position": 1,
+            "get_ticket_details": 1,
+            "post_to_board": 1
+          }
+        },
+        "Facilities": {
+          "called": false,
+          "runs": 0,
+          "contribution": "Not called on this ticket.",
+          "mcp_tools": {}
+        },
+        "Customer Service": {
+          "called": true,
+          "runs": 1,
+          "contribution": "Drafted the quote to Yale AI Club: 8 now, 12 once restock is scheduled, $25.89/hoodie; not sent.",
+          "mcp_tools": {
+            "get_ticket_details": 1,
+            "post_to_board": 1
+          }
+        }
+      },
+      "delegations": [
+        {
+          "chain": "boss",
+          "to": "inventory"
+        },
+        {
+          "chain": "boss",
+          "to": "accounting"
+        },
+        {
+          "chain": "boss -> inventory",
+          "to": "accounting"
+        },
+        {
+          "chain": "boss",
+          "to": "customer_service"
+        }
+      ],
+      "board_posts": [
+        {
+          "id": 8,
+          "author": "Inventory",
+          "kind": "internal_note"
+        },
+        {
+          "id": 9,
+          "author": "Accounting",
+          "kind": "internal_note"
+        },
+        {
+          "id": 10,
+          "author": "Customer Service",
+          "kind": "customer_draft"
+        },
+        {
+          "id": 11,
+          "author": "Boss",
+          "kind": "decision"
+        }
+      ],
+      "human_approvals": [],
+      "cash_change": 0,
+      "run": {
+        "run_id": "bff306089ff5",
+        "total_tokens": 55676,
+        "model_requests": 18,
+        "tool_calls": 19,
+        "model": "openai-gpt-luna-6"
+      }
+    }
+  ]
+}

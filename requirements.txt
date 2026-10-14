@@ -1,0 +1,8 @@
+# Campus Customs Multi-Agent Operations (Python 3.12)
+fastmcp==4.0.5          # MCP server + client
+pydantic-ai==2.44.0     # agent team
+pydantic>=2.13
+openai>=3.8             # OpenAI-compatible client pointed at the Portkey gateway
+fastapi>=0.143          # backend routes
+uvicorn[standard]>=0.53
+python-dotenv>=1.0      # reads PORTKEY_API_KEY from .env

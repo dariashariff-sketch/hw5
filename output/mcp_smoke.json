@@ -1,0 +1,248 @@
+{
+  "run_at_utc": "2026-10-14T21:46:31+00:00",
+  "transport": "stdio, launched from .mcp.json (server 'campus-customs')",
+  "database": "data/campus_customs_new.db",
+  "database_sha256": "23686a90d698f7fa6f901a3f0a9774db9cbb31e13151c9e5717275f3321f360a",
+  "tools_listed_by_server": [
+    "check_stock_and_vendors",
+    "get_lease_rent_status",
+    "get_pricing_and_margin"
+  ],
+  "tests": [
+    {
+      "prompt": "All right, now for problem four. It's titled, add the MCP server to VibeCoder and test each tool. So the idea/goal for this problem here is to add the MCP server to this project so that the VibeCoder can call the tools. Save the JSON text in .mcp.json at the project root. And then test each of the three MCP tools. Save the evidence in output slash MCP underscore smoke dot JSON. For every tool, include the prompt that I asked you, the tool name, and the tool output. The tool output must match values in data slash campus underscore customs underscore new dot db.",
+      "ticket": 101,
+      "tool": "check_stock_and_vendors",
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty_needed": 1
+      },
+      "output": {
+        "shop_today": "2026-08-31",
+        "sku": "CC-TEE-WHITE",
+        "name": "Classic Bulldog Tee",
+        "size": "S",
+        "location": "Aisle B",
+        "on_hand": 0,
+        "qty_needed": 1,
+        "shortfall": 1,
+        "vendors": [
+          {
+            "vendor_id": 1,
+            "name": "Bulldog Print Co",
+            "specialty": "apparel reprint",
+            "lead_days": 5,
+            "open_invoices": [
+              {
+                "invoice_id": 501,
+                "amount": 840.0,
+                "due_date": "2026-08-28",
+                "days_overdue": 3,
+                "description": "Rush reprint CC-TEE-WHITE S"
+              }
+            ],
+            "can_ship": false
+          },
+          {
+            "vendor_id": 2,
+            "name": "Elm City Gifts",
+            "specialty": "mugs and small goods",
+            "lead_days": 3,
+            "open_invoices": [],
+            "can_ship": true
+          },
+          {
+            "vendor_id": 3,
+            "name": "QuickShip CT",
+            "specialty": "local courier",
+            "lead_days": 1,
+            "open_invoices": [],
+            "can_ship": true
+          }
+        ]
+      },
+      "db_verification": [
+        {
+          "field": "shop_today",
+          "tool_value": "2026-08-31",
+          "db_query": "select date_today from desk",
+          "db_value": "2026-08-31",
+          "match": true
+        },
+        {
+          "field": "on_hand",
+          "tool_value": 0,
+          "db_query": "select qty from inventory where sku='CC-TEE-WHITE' and size='S'",
+          "db_value": 0,
+          "match": true
+        },
+        {
+          "field": "vendors[1].lead_days",
+          "tool_value": 5,
+          "db_query": "select lead_days from vendors where id=1",
+          "db_value": 5,
+          "match": true
+        },
+        {
+          "field": "vendors[1].open_invoice_count",
+          "tool_value": 1,
+          "db_query": "select count(*) from invoices where vendor_id=1 and status='open'",
+          "db_value": 1,
+          "match": true
+        },
+        {
+          "field": "invoice 501.amount",
+          "tool_value": 840.0,
+          "db_query": "select amount from invoices where id=501",
+          "db_value": 840.0,
+          "match": true
+        },
+        {
+          "field": "invoice 501.due_date",
+          "tool_value": "2026-08-28",
+          "db_query": "select due_date from invoices where id=501",
+          "db_value": "2026-08-28",
+          "match": true
+        },
+        {
+          "field": "vendors[2].lead_days",
+          "tool_value": 3,
+          "db_query": "select lead_days from vendors where id=2",
+          "db_value": 3,
+          "match": true
+        },
+        {
+          "field": "vendors[2].open_invoice_count",
+          "tool_value": 0,
+          "db_query": "select count(*) from invoices where vendor_id=2 and status='open'",
+          "db_value": 0,
+          "match": true
+        },
+        {
+          "field": "vendors[3].lead_days",
+          "tool_value": 1,
+          "db_query": "select lead_days from vendors where id=3",
+          "db_value": 1,
+          "match": true
+        },
+        {
+          "field": "vendors[3].open_invoice_count",
+          "tool_value": 0,
+          "db_query": "select count(*) from invoices where vendor_id=3 and status='open'",
+          "db_value": 0,
+          "match": true
+        }
+      ],
+      "all_match": true
+    },
+    {
+      "prompt": "All right, now for problem four. It's titled, add the MCP server to VibeCoder and test each tool. So the idea/goal for this problem here is to add the MCP server to this project so that the VibeCoder can call the tools. Save the JSON text in .mcp.json at the project root. And then test each of the three MCP tools. Save the evidence in output slash MCP underscore smoke dot JSON. For every tool, include the prompt that I asked you, the tool name, and the tool output. The tool output must match values in data slash campus underscore customs underscore new dot db.",
+      "ticket": 102,
+      "tool": "get_lease_rent_status",
+      "arguments": {
+        "lease_id": 1
+      },
+      "output": {
+        "shop_today": "2026-08-31",
+        "lease_id": 1,
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400.0,
+        "next_due": "2026-09-02",
+        "days_until_due": 2,
+        "overdue": false,
+        "notes": null,
+        "cash_accounts": [
+          {
+            "account": "checking",
+            "balance": 3400.0,
+            "as_of": "2026-08-31",
+            "covers_rent": true
+          }
+        ]
+      },
+      "db_verification": [
+        {
+          "field": "shop_today",
+          "tool_value": "2026-08-31",
+          "db_query": "select date_today from desk",
+          "db_value": "2026-08-31",
+          "match": true
+        },
+        {
+          "field": "monthly_rent",
+          "tool_value": 2400.0,
+          "db_query": "select monthly_rent from leases where id=1",
+          "db_value": 2400.0,
+          "match": true
+        },
+        {
+          "field": "next_due",
+          "tool_value": "2026-09-02",
+          "db_query": "select next_due from leases where id=1",
+          "db_value": "2026-09-02",
+          "match": true
+        },
+        {
+          "field": "landlord",
+          "tool_value": "Elm City Properties",
+          "db_query": "select landlord from leases where id=1",
+          "db_value": "Elm City Properties",
+          "match": true
+        },
+        {
+          "field": "cash_accounts[checking].balance",
+          "tool_value": 3400.0,
+          "db_query": "select balance from cash_accounts where name='checking'",
+          "db_value": 3400.0,
+          "match": true
+        }
+      ],
+      "all_match": true
+    },
+    {
+      "prompt": "All right, now for problem four. It's titled, add the MCP server to VibeCoder and test each tool. So the idea/goal for this problem here is to add the MCP server to this project so that the VibeCoder can call the tools. Save the JSON text in .mcp.json at the project root. And then test each of the three MCP tools. Save the evidence in output slash MCP underscore smoke dot JSON. For every tool, include the prompt that I asked you, the tool name, and the tool output. The tool output must match values in data slash campus underscore customs underscore new dot db.",
+      "ticket": 103,
+      "tool": "get_pricing_and_margin",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "qty": 20,
+        "discount_pct": 15
+      },
+      "output": {
+        "sku": "CC-HOOD-NAVY",
+        "qty": 20,
+        "unit_cost": 22.0,
+        "list_price": 58.0,
+        "discount_pct": 15.0,
+        "unit_price": 49.3,
+        "unit_margin": 27.3,
+        "margin_pct": 55.38,
+        "quote_total": 986.0,
+        "total_cost": 440.0,
+        "total_margin": 546.0,
+        "below_cost": false,
+        "max_discount_pct_before_loss": 62.07
+      },
+      "db_verification": [
+        {
+          "field": "unit_cost",
+          "tool_value": 22.0,
+          "db_query": "select unit_cost from pricing where sku='CC-HOOD-NAVY'",
+          "db_value": 22.0,
+          "match": true
+        },
+        {
+          "field": "list_price",
+          "tool_value": 58.0,
+          "db_query": "select list_price from pricing where sku='CC-HOOD-NAVY'",
+          "db_value": 58.0,
+          "match": true
+        }
+      ],
+      "all_match": true
+    }
+  ],
+  "all_tools_match_database": true
+}
